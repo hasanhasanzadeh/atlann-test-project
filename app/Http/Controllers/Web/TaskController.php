@@ -24,9 +24,10 @@ class TaskController extends Controller
 
             $tasks = Task::query();
 
-            if($keyword = request('search')) {
-                $tasks->where('name' , 'LIKE' , "%{$keyword}%");
-            }
+        if($keyword = request('search')|| $filter=request('date')) {
+            $tasks->orWhere('name' , 'LIKE' , "%{$keyword}%")
+            ->orWhere('created_at','Like',"%{$filter}%");
+        }
             $tasks=$tasks->where('user_id',auth()->user()->id)
                 ->latest()->paginate(10);
 

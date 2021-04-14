@@ -2,6 +2,17 @@
 
 @section('content')
     <div class="container">
+        <div class"row">
+            <div class="col-md-10 col-12 m-auto">
+		  <form action="" method="get">
+                    <input type="date" name="date" >
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-filter"></i>
+                        filter
+                    </button>
+                </form>            
+            </div>        
+        </div>
         <div class="row">
             <div class="col-md-10 col-12 m-auto">
                 <h4 class="text-center">
