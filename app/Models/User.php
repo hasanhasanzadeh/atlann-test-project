@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -40,4 +40,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     *
+     * Eloquent Tasks RelationShip by column task_id
+     *
+     */
+    public function Tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function isManager()
+    {
+
+        if ($this->level == 'admin'){
+            return true;
+        }
+        return false;
+    }
+
 }

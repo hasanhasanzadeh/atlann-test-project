@@ -16,3 +16,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home')
+    ->middleware('verified');
+
+Route::middleware('verified','auth')
+    ->namespace('App\Http\Controllers\Web')
+    ->prefix('admin')->group(function (){
+
+    Route::resource('tasks','TaskController');
+
+   Route::get('/all/tasks','TaskAdminController@index')
+       ->name('admin.task.index')
+       ->middleware('isAdmin');
+
+   Route::get('/all/{user_id}/tasks/{task_id}','TaskAdminController@show')
+       ->name('admin.task.show')
+       ->middleware('isAdmin');
+});
